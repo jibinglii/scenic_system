@@ -2,7 +2,7 @@
   <div class="item">
     <div class="popover">
       <el-popover
-        trigger="click"
+        trigger="hover"
         placement="right"
         width="460"
         v-model="visible"

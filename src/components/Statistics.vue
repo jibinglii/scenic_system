@@ -1,41 +1,47 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover
-        trigger="click"
-        placement="right"
-        width="460"
-        v-model="visible"
-        title="数据统计"
-        popper-class="jian_statics"
-      >
+      <el-popover trigger="hover"
+                  placement="right"
+                  width="460"
+                  v-model="visible"
+                  title="数据统计"
+                  popper-class="jian_statics">
         <p @click="visible = false">关闭</p>
         <div class="listDiv">
-          <div class="list" v-for="(item,index) in lists" :key="index">
-              <div class="top">
-                <h2>{{item.name}}</h2>
-                <div class="button_div">
-                  <el-button>查看</el-button>
-                </div>
+          <div class="list"
+               v-for="(item,index) in lists"
+               :key="index">
+            <div class="top">
+              <h2>{{item.name}}</h2>
+              <div class="button_div">
+                <el-button @click="statiClick(item.id)">查看</el-button>
               </div>
+            </div>
           </div>
         </div>
-        <el-button slot="reference" class="img_div">
-          <img :src="activeImg" class="activeImg" alt />
-          <img :src="img" class="img" alt />
+        <el-button slot="reference"
+                   class="img_div">
+          <img :src="activeImg"
+               class="activeImg"
+               alt />
+          <img :src="img"
+               class="img"
+               alt />
         </el-button>
       </el-popover>
     </div>
-   
+
   </div>
 </template>
 
 <script>
 import { Popover, Button } from "element-ui";
 
+
 export default {
   name: "search",
-  data() {
+  data () {
     return {
       visible: false,
       isshow: false,
@@ -43,29 +49,32 @@ export default {
       activeImg: require("../assets/images/active_data.png"),
       lists: [
         {
-          name: "八宜茶舍",
-          id:0
+          name: "停车场数据",
+          id: 0
         },
         {
-          name: "八宜茶舍",
-          id:1
+          name: "票务数据",
+          id: 1
         },
         {
-          name: "八宜茶舍",
-          id:2
-        },
-        {
-          name: "八宜茶舍",
-          id:3
+          name: "环境监测",
+          id: 2
         }
       ]
     };
   },
-  methods: {},
+  methods: {
+    statiClick (id) {
+      console.log(id)
+      if (id === 0) {
+        this.$emit("show", 'nishishuishuiss')
+      }
+    }
+  },
   components: {
     "el-popover": Popover,
     "el-button": Button,
-    
+
   }
 };
 </script>
@@ -110,5 +119,4 @@ export default {
 .el-popover p {
   margin-top: -30px;
 }
-
 </style>

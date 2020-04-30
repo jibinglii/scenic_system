@@ -2,24 +2,38 @@
   <div id="main">
     <sm-web-map :map-options="mapOptions">
       <sm-tile-layer :url="url"></sm-tile-layer>
+
     </sm-web-map>
   </div>
 </template>
 <script>
 export default {
   name: "vmap",
-  data() {
+  props: ["lng", "lat"],
+  data () {
     return {
-      url:
-        "http://119.3.248.197:8090/iserver/services/map-new-2D/rest/maps/YXX@data",
+      url: "",
       mapOptions: {
         center: [39.94, 116.31],
         zoom: 18,
         crs: L.CRS.EPSG4326
-      }
+      },
+
     };
   },
- 
+  mounted () {
+    this.gissetting2d()
+  },
+  methods: {
+    async gissetting2d () {
+      await this.$http.get('/gissetting/2d').then(res => {
+        let result = res.data.data
+        this.url = result.F_URL
+        console.log(res)
+        localStorage.setItem('Fid', res.data.data.F_Id)
+      })
+    },
+  }
 };
 </script>
 <style scoped>

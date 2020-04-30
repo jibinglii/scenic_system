@@ -1,30 +1,45 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover trigger="click" placement="right-start" width="460" v-model="visible">
+      <el-popover trigger="hover"
+                  placement="right-start"
+                  width="460"
+                  v-model="visible">
         <p @click="visible = false">关闭</p>
         <div style="text-align:center">
-          <el-input placeholder="搜索" prefix-icon="el-icon-search" v-model="value"></el-input>
+          <el-input placeholder="搜索"
+                    prefix-icon="el-icon-search"
+                    v-model="searchText"
+                    @change="onChange"></el-input>
         </div>
         <div class="listDiv">
-          <div class="list" v-for="(item,index) in lists" :key="index">
+          <div class="list"
+               v-for="(item,index) in lists"
+               :key="index"
+               v-show="searchText">
             <div class="left">
-              <img :src="item.imgUrl" />
+              <img :src="item.F_Image" />
             </div>
             <div class="right">
-              <h3>{{item.name}}</h3>
-              <p>{{item.intro}}</p>
+              <h3>{{item.F_Name}}</h3>
+              <p>{{item.F_Remarks}}</p>
               <div class="button_div">
                 <el-button>查看地图</el-button>
                 <el-button>实时监控</el-button>
               </div>
             </div>
           </div>
+          <div v-show="isShow">未搜索到指定内容</div>
         </div>
 
-        <el-button slot="reference" class="img_div">
-          <img :src="activeImg" class="activeImg" alt />
-          <img :src="img" class="img" alt />
+        <el-button slot="reference"
+                   class="img_div">
+          <img :src="activeImg"
+               class="activeImg"
+               alt />
+          <img :src="img"
+               class="img"
+               alt />
         </el-button>
       </el-popover>
     </div>
@@ -35,36 +50,34 @@
 import { Popover, Button, Input } from "element-ui";
 export default {
   name: "search",
-  data() {
+  data () {
     return {
       visible: false,
-      isshow: false,
-      value: "",
+      isShow: false,
+      searchText: "",
       img: require("../assets/images/search.png"),
       activeImg: require("../assets/images/active_search.png"),
-      lists: [
-        {
-          imgUrl: require("../assets/images/scenic.png"),
-          name: "澄鲜湖",
-          intro:
-            "澄鲜湖位于紫竹院公园内,南长河北岸。湖沿岸绿柳或隔岸观景,或行舟于湖中。与不远处的高楼林立相比,有一种“结庐在人境,而无车马喧"
-        },
-        {
-          imgUrl: require("../assets/images/scenic.png"),
-          name: "澄鲜湖",
-          intro:
-            "澄鲜湖位于紫竹院公园内,南长河北岸。湖沿岸绿柳或隔岸观景,或行舟于湖中。与不远处的高楼林立相比,有一种“结庐在人境,而无车马喧"
-        },
-        {
-          imgUrl: require("../assets/images/scenic.png"),
-          name: "澄鲜湖",
-          intro:
-            "澄鲜湖位于紫竹院公园内,南长河北岸。湖沿岸绿柳或隔岸观景,或行舟于湖中。与不远处的高楼林立相比,有一种“结庐在人境,而无车马喧"
-        }
-      ]
+      lists: []
     };
   },
-  methods: {},
+  methods: {
+    onChange () {
+      this.getListSearch()
+    },
+    async getListSearch () {
+      var keyword = this.searchText
+      console.log(keyword)
+      await this.$http.get("/scenicareaaround/getlistforsearch/" + keyword).then(res => {
+        console.log(res)
+        this.lists = res.data.data
+        if (res.data.data.length === 0) {
+          this.isShow = true
+        } else {
+          this.isShow = false
+        }
+      });
+    }
+  },
   components: {
     "el-popover": Popover,
     "el-button": Button,
@@ -79,6 +92,6 @@ export default {
   height: 400px;
 }
 .popper__arrow {
-    top: 25px !important;
+  top: 25px !important;
 }
 </style>
