@@ -1,17 +1,17 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover trigger="hover"
-                  placement="right"
-                  width="460"
-                  v-model="visible"
-                  title="数据统计"
-                  popper-class="jian_statics">
+      <el-popover
+        trigger="hover"
+        placement="right"
+        width="460"
+        v-model="visible"
+        title="数据统计"
+        popper-class="jian_statics"
+      >
         <p @click="visible = false">关闭</p>
         <div class="listDiv">
-          <div class="list"
-               v-for="(item,index) in lists"
-               :key="index">
+          <div class="list" v-for="(item,index) in lists" :key="index">
             <div class="top">
               <h2>{{item.name}}</h2>
               <div class="button_div">
@@ -20,28 +20,21 @@
             </div>
           </div>
         </div>
-        <el-button slot="reference"
-                   class="img_div">
-          <img :src="activeImg"
-               class="activeImg"
-               alt />
-          <img :src="img"
-               class="img"
-               alt />
+        <el-button slot="reference" class="img_div">
+          <img :src="activeImg" class="activeImg" alt />
+          <img :src="img" class="img" alt />
         </el-button>
       </el-popover>
     </div>
-
   </div>
 </template>
 
 <script>
 import { Popover, Button } from "element-ui";
 
-
 export default {
   name: "search",
-  data () {
+  data() {
     return {
       visible: false,
       isshow: false,
@@ -64,17 +57,52 @@ export default {
     };
   },
   methods: {
-    statiClick (id) {
-      console.log(id)
+    statiClick(id) {
+      console.log(id);
       if (id === 0) {
-        this.$emit("show", 'nishishuishuiss')
+        this.$store.state.isTicketShow1 = false;
+        this.$store.state.isTicketShow2 = false;
+         this.$store.state.isMonitorShow1 = false;
+        this.$store.state.isMonitorShow2 = false;
+        this.$store.state.isMonitorShow3 = false;
+        if ((this.$store.state.isPack = !this.$store.state.isPack)) {
+          this.$store.state.isPackShow1 = true;
+          this.$store.state.isPackShow2 = true;
+          this.$store.state.isPackShow3 = true;
+        }
+        return;
+      }
+      if (id === 1) {
+        this.$store.state.isPackShow1 = false;
+        this.$store.state.isPackShow2 = false;
+        this.$store.state.isPackShow3 = false;
+        this.$store.state.isMonitorShow1 = false;
+        this.$store.state.isMonitorShow2 = false;
+        this.$store.state.isMonitorShow3 = false;
+        if ((this.$store.state.isTicket = !this.$store.state.isTicket)) {
+          this.$store.state.isTicketShow1 = true;
+          this.$store.state.isTicketShow2 = true;
+        }
+        return;
+      }
+      if (id === 2) {
+        this.$store.state.isTicketShow1 = false;
+        this.$store.state.isTicketShow2 = false;
+        this.$store.state.isPackShow1 = false;
+        this.$store.state.isPackShow2 = false;
+        this.$store.state.isPackShow3 = false;
+        if ((this.$store.state.isMonitor = !this.$store.state.isMonitor)) {
+          this.$store.state.isMonitorShow1 = true;
+          this.$store.state.isMonitorShow2 = true;
+          this.$store.state.isMonitorShow3 = true;
+        }
+        return;
       }
     }
   },
   components: {
     "el-popover": Popover,
-    "el-button": Button,
-
+    "el-button": Button
   }
 };
 </script>

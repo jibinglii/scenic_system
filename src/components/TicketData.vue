@@ -1,22 +1,18 @@
 <template>
   <div>
-    <div class="bar" v-show="$store.state.isPackShow1">
+    <div class="bar" v-show="$store.state.isTicketShow1">
       <div class="top">
+        <span>景区票务</span>
         <span @click="close()" class="close">关闭</span>
       </div>
-      <div id="main1" style="width:100%;height: 200px"></div>
+      <div id="mainTicket1" style="width:100%;height: 200px"></div>
     </div>
-    <div class="bar" v-show="$store.state.isPackShow2">
+    <div class="bar" v-show="$store.state.isTicketShow2">
       <div class="top">
+        <span>景区客流量</span>
         <span @click="close2()" class="close">关闭</span>
       </div>
-      <div id="main2" style="width:100%;height: 200px"></div>
-    </div>
-    <div class="bar" v-show="$store.state.isPackShow3">
-      <div class="top">
-        <span @click="close3()" class="close">关闭</span>
-      </div>
-      <div id="main3" style="width:100%;height: 200px"></div>
+      <div id="mainTicket2" style="width:100%;height: 200px"></div>
     </div>
   </div>
 </template>
@@ -29,48 +25,39 @@ require("echarts/lib/chart/bar");
 require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
 export default {
-  name: "bar",
+  name: "",
   data() {
-    return {
-      
-    };
+    return {};
   },
   mounted() {
     this.$nextTick(() => {
-      this.initData();
-      this.initData2();
-      this.initData3();
+      this.initTicketData();
+      this.initTicketData2();
     });
   },
   methods: {
     close() {
-      this.$store.state.isPackShow1 = false;
+      this.$store.state.isTicketShow1 = false;
     },
     close2() {
-      this.$store.state.isPackShow2 = false;
-    },
-    close3() {
-      this.$store.state.isPackShow3 = false;
+      this.$store.state.isTicketShow2 = false;
     },
 
     //初始化数据
-    initData() {
+    initTicketData() {
       // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("main1"));
+      var mainTicket1 = echarts.init(document.getElementById("mainTicket1"));
       this.$http
-        .get("http://119.3.248.197:8086/api/mobile/TingCheChangShiYongLv", {
-          params: {
-            type: 0
-          }
-        })
+        .get("http://119.3.248.197:8086/api/mobile/JingQuPiaoWu")
         .then(res => {
+          console.log(res);
           // 绘制图表
-          myChart.setOption({
+          mainTicket1.setOption({
             color: ["#58e7ff", "#febb05"],
             title: {
-              text: "停车场使用率（%）",
+              text: "票数（万张）",
               textStyle: {
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -85,7 +72,7 @@ export default {
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
-              data: ["停车数量", "环比(周)"]
+              data: ["售票票数", "环比（去年）"]
             },
 
             xAxis: {
@@ -97,7 +84,7 @@ export default {
                   color: "#808080"
                 }
               },
-              data: res.data.data.weekdays
+              data: res.data.data.month
             },
             yAxis: {
               type: "value",
@@ -110,7 +97,7 @@ export default {
             },
             series: [
               {
-                name: "停车数量",
+                name: "售票票数",
                 type: "bar",
                 stack: "",
                 smooth: true,
@@ -118,7 +105,7 @@ export default {
                 data: res.data.data.shuliang
               },
               {
-                name: "环比(周)",
+                name: "环比（去年）",
                 type: "line",
                 stack: "",
                 smooth: true,
@@ -133,23 +120,20 @@ export default {
           });
         });
     },
-    initData2() {
+    initTicketData2() {
       // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("main2"));
+      var mainTicket2 = echarts.init(document.getElementById("mainTicket2"));
       this.$http
-        .get("http://119.3.248.197:8086/api/mobile/TingCheChangShiYongLv", {
-          params: {
-            type: 1
-          }
-        })
+        .get("http://119.3.248.197:8086/api/mobile/JingQuKeLiuLiang")
         .then(res => {
+          console.log(res);
           // 绘制图表
-          myChart.setOption({
+          mainTicket2.setOption({
             color: ["#58e7ff", "#febb05"],
             title: {
-              text: "停车场使用率（%）",
+              text: "票数（万张）",
               textStyle: {
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -164,7 +148,7 @@ export default {
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
-              data: ["停车数量", "环比(月)"]
+              data: ["售票票数", "环比（去年）"]
             },
 
             xAxis: {
@@ -176,7 +160,7 @@ export default {
                   color: "#808080"
                 }
               },
-              data: res.data.data.weekdays
+              data: res.data.data.month
             },
             yAxis: {
               type: "value",
@@ -189,7 +173,7 @@ export default {
             },
             series: [
               {
-                name: "停车数量",
+                name: "售票票数",
                 type: "bar",
                 stack: "",
                 smooth: true,
@@ -197,86 +181,7 @@ export default {
                 data: res.data.data.shuliang
               },
               {
-                name: "环比(月)",
-                type: "line",
-                stack: "",
-                smooth: true,
-                symbolSize: 0, //拐点图形大小
-                lineStyle: {
-                  width: 2,
-                  type: "dashed"
-                },
-                data: res.data.data.huanbi
-              }
-            ]
-          });
-        });
-    },
-    initData3() {
-      // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("main3"));
-      this.$http
-        .get("http://119.3.248.197:8086/api/mobile/TingCheChangShiYongLv", {
-          params: {
-            type: 2
-          }
-        })
-        .then(res => {
-          // 绘制图表
-          myChart.setOption({
-            color: ["#58e7ff", "#febb05"],
-            title: {
-              text: "停车场使用率（%）",
-              textStyle: {
-                fontSize: 14,
-                fontWeight: "500",
-                color: "#7a7b7b"
-              }
-            },
-            tooltip: {
-              trigger: "axis"
-            },
-            legend: {
-              y: "top",
-              x: "right",
-              itemGap: 10,
-              textStyle: {
-                color: "#9c9e9e" //---所有图例的字体颜色
-              },
-              data: ["停车数量", "环比(年)"]
-            },
-
-            xAxis: {
-              type: "category",
-              boundaryGap: false,
-              axisTick: {
-                show: false,
-                lineStyle: {
-                  color: "#808080"
-                }
-              },
-              data: res.data.data.weekdays
-            },
-            yAxis: {
-              type: "value",
-              axisLine: {
-                show: false
-              },
-              axisTick: {
-                show: false
-              }
-            },
-            series: [
-              {
-                name: "停车数量",
-                type: "bar",
-                stack: "",
-                smooth: true,
-                barWidth: 10,
-                data: res.data.data.shuliang
-              },
-              {
-                name: "环比(年)",
+                name: "环比（去年）",
                 type: "line",
                 stack: "",
                 smooth: true,
@@ -304,9 +209,11 @@ export default {
   overflow: hidden;
   margin: 10px 0;
   .top {
-    font-size: 14px;
+    font-size: 16px;
     text-align: right;
     margin-bottom: 10px;
+    display: flex;
+   justify-content: space-between;
     .close {
       cursor: pointer;
     }

@@ -3,21 +3,20 @@
     <v-map></v-map>
     <!-- <iframe src="../static/gettingStarted/f.html"
             width="100%"
-            height="100%"></iframe> -->
-    <div class="title_Div"
-         :style="{'background-image':'url('+title_bg+')'}">
+    height="100%"></iframe>-->
+    <div class="title_Div" :style="{'background-image':'url('+title_bg+')'}">
       <h2>景区一张图数据管理系统</h2>
       <span>
         在园人数：
-        <i>954</i>人
+        <i>{{ticketData.ZaiYuanCount}}</i>人
       </span>
       <span>
         进园人数：
-        <i>954</i>人
+        <i>{{ticketData.RuYuanCount}}</i>人
       </span>
       <span>
-        出园人数：
-        <i>954</i>人
+        实时售票数：
+        <i>{{ticketData.ShiShiShouPiao}}</i>人
       </span>
     </div>
     <div class="list_div">
@@ -27,43 +26,12 @@
       <v-address></v-address>
       <v-monitor></v-monitor>
       <!-- <v-navigation></v-navigation> -->
-      <!-- <v-statistics></v-statistics> -->
-      <div class="item static">
-        <div class="popover">
-          <el-popover trigger="hover"
-                      placement="right"
-                      width="460"
-                      v-model="visible"
-                      title="数据统计"
-                      popper-class="jian_statics">
-            <p @click="visible = false">关闭</p>
-            <div class="listDiv">
-              <div class="list"
-                   v-for="(item,index) in staticLists"
-                   :key="index">
-                <div class="top">
-                  <h2>{{item.name}}</h2>
-                  <div class="button_div">
-                    <el-button @click="statiClick(item.id)">查看</el-button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <el-button slot="reference"
-                       class="img_div">
-              <img :src="activeImg"
-                   class="activeImg"
-                   alt />
-              <img :src="img"
-                   class="img"
-                   alt />
-            </el-button>
-          </el-popover>
-        </div>
-      </div>
+      <v-statistics></v-statistics>
     </div>
     <div class="echarts_right">
-      <v-pack-data v-show="isPack"></v-pack-data>
+      <v-pack-data v-show="$store.state.isPack"></v-pack-data>
+      <v-ticket-data v-show="$store.state.isTicket"></v-ticket-data>
+      <v-monitor-data v-show="$store.state.isMonitor"></v-monitor-data>
     </div>
   </div>
 </template>
@@ -78,9 +46,11 @@ import Monitor from "../components/Monitor";
 // import Navigation from "../components/Navigation";
 import Statistics from "../components/Statistics";
 import packData from "../components/packData";
+import TicketData from "../components/TicketData";
+import MonitorData from "../components/MonitorData";
 export default {
   name: "index",
-  data () {
+  data() {
     return {
       title_bg: require("../assets/images/title_bg.png"),
       visible: false,
@@ -101,21 +71,27 @@ export default {
           id: 2
         }
       ],
-      isPack: false
-
+      ticketData: {
+        ZaiYuanCount: "",
+        RuYuanCount: "",
+        ShiShiShouPiao: ""
+      }
     };
   },
-  computed: {
-
-
-
+  created() {
+    this.ticketDatas();
   },
   methods: {
-    statiClick (id) {
-      if (id === 0) {
-        this.isPack = !this.isPack
-        console.log(this.isPack)
-      }
+    async ticketDatas() {
+      await this.$http
+        .get("http://119.3.248.197:8086/api/mobile/PiaoWuShuJu")
+        .then(res => {
+          console.log(res);
+          this.ticketData.ShiShiShouPiao = res.data.data.ShiShiShouPiao;
+          this.ticketData.ShiShiJianPiao = res.data.data.ShiShiJianPiao;
+          this.ticketData.RuYuanCount = res.data.data.RuYuanCount;
+          this.ticketData.ZaiYuanCount = res.data.data.ZaiYuanCount;
+        });
     }
   },
   components: {
@@ -128,8 +104,10 @@ export default {
     // "v-navigation": Navigation,
     "v-statistics": Statistics,
     "v-pack-data": packData,
+    "v-ticket-data": TicketData,
+    "v-monitor-data": MonitorData,
     "el-popover": Popover,
-    "el-button": Button,
+    "el-button": Button
   }
 };
 </script>
@@ -187,56 +165,6 @@ export default {
     ._div {
       margin-bottom: 10px;
     }
-  }
-}
-.item.static {
-  position: absolute;
-  top: 100%;
-}
-.el-popover.jian_statics {
-  .listDiv {
-    .list {
-      padding: 20px 0;
-
-      .top {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-
-        h2 {
-          color: #fc6b00;
-          font-size: 20px;
-          margin-bottom: 0px;
-          font-weight: 600;
-        }
-
-        .button_div {
-          .el-button {
-            padding: 8px 25px;
-            font-size: 13px;
-            border-radius: 10px;
-            background: #7d7d7d;
-            color: #fff;
-            border: none;
-          }
-
-          .el-button:hover {
-            background: #2581c9;
-          }
-        }
-      }
-    }
-  }
-
-  .img_div {
-    img {
-      margin-left: -8px;
-      margin-top: 0px;
-    }
-  }
-
-  .el-popover p {
-    margin-top: -30px;
   }
 }
 </style>

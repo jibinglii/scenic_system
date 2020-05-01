@@ -1,22 +1,25 @@
 <template>
   <div>
-    <div class="bar" v-show="$store.state.isPackShow1">
+    <div class="bar" v-show="$store.state.isMonitorShow1">
       <div class="top">
+        <span>周</span>
         <span @click="close()" class="close">关闭</span>
       </div>
-      <div id="main1" style="width:100%;height: 200px"></div>
+      <div id="mainMonitor1" style="width:100%;height: 200px"></div>
     </div>
-    <div class="bar" v-show="$store.state.isPackShow2">
+    <div class="bar" v-show="$store.state.isMonitorShow2">
       <div class="top">
+        <span>月</span>
         <span @click="close2()" class="close">关闭</span>
       </div>
-      <div id="main2" style="width:100%;height: 200px"></div>
+      <div id="mainMonitor2" style="width:100%;height: 200px"></div>
     </div>
-    <div class="bar" v-show="$store.state.isPackShow3">
+    <div class="bar" v-show="$store.state.isMonitorShow3">
       <div class="top">
+        <span>年</span>
         <span @click="close3()" class="close">关闭</span>
       </div>
-      <div id="main3" style="width:100%;height: 200px"></div>
+      <div id="mainMonitor3" style="width:100%;height: 200px"></div>
     </div>
   </div>
 </template>
@@ -31,46 +34,45 @@ require("echarts/lib/component/title");
 export default {
   name: "bar",
   data() {
-    return {
-      
-    };
+    return {};
   },
   mounted() {
     this.$nextTick(() => {
-      this.initData();
-      this.initData2();
-      this.initData3();
+      this.initMonitorData();
+      this.initMonitorData2();
+      this.initMonitorData3();
     });
   },
   methods: {
     close() {
-      this.$store.state.isPackShow1 = false;
+      this.$store.state.isMonitorShow1 = false;
     },
     close2() {
-      this.$store.state.isPackShow2 = false;
+      this.$store.state.isMonitorShow2 = false;
     },
     close3() {
-      this.$store.state.isPackShow3 = false;
+      this.$store.state.isMonitorShow3 = false;
     },
 
     //初始化数据
-    initData() {
+    initMonitorData() {
       // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("main1"));
+      var mainMonitor1 = echarts.init(document.getElementById("mainMonitor1"));
       this.$http
-        .get("http://119.3.248.197:8086/api/mobile/TingCheChangShiYongLv", {
+        .get("http://119.3.248.197:8086/api/mobile/HuanJiangJianCeChat", {
           params: {
             type: 0
           }
         })
         .then(res => {
+          console.log(res);
           // 绘制图表
-          myChart.setOption({
+          mainMonitor1.setOption({
             color: ["#58e7ff", "#febb05"],
             title: {
-              text: "停车场使用率（%）",
+              text: "μg/m3",
               textStyle: {
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -85,7 +87,7 @@ export default {
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
-              data: ["停车数量", "环比(周)"]
+              data: ["PM10", "PM2.5"]
             },
 
             xAxis: {
@@ -97,7 +99,7 @@ export default {
                   color: "#808080"
                 }
               },
-              data: res.data.data.weekdays
+              data: res.data.data.days
             },
             yAxis: {
               type: "value",
@@ -110,46 +112,43 @@ export default {
             },
             series: [
               {
-                name: "停车数量",
-                type: "bar",
-                stack: "",
-                smooth: true,
-                barWidth: 10,
-                data: res.data.data.shuliang
-              },
-              {
-                name: "环比(周)",
+                name: "PM10",
                 type: "line",
                 stack: "",
-                smooth: true,
-                symbolSize: 0, //拐点图形大小
+                data: res.data.data.pm10
+              },
+              {
+                name: "PM2.5",
+                type: "line",
+                stack: "",
                 lineStyle: {
                   width: 2,
                   type: "dashed"
                 },
-                data: res.data.data.huanbi
+                data: res.data.data.pm25
               }
             ]
           });
         });
     },
-    initData2() {
+    initMonitorData2() {
       // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("main2"));
+      var mainMonitor2 = echarts.init(document.getElementById("mainMonitor2"));
       this.$http
-        .get("http://119.3.248.197:8086/api/mobile/TingCheChangShiYongLv", {
+        .get("http://119.3.248.197:8086/api/mobile/HuanJiangJianCeChat", {
           params: {
             type: 1
           }
         })
         .then(res => {
+          console.log(res);
           // 绘制图表
-          myChart.setOption({
+          mainMonitor2.setOption({
             color: ["#58e7ff", "#febb05"],
             title: {
-              text: "停车场使用率（%）",
+              text: "μg/m3",
               textStyle: {
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -164,7 +163,7 @@ export default {
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
-              data: ["停车数量", "环比(月)"]
+              data: ["PM10", "PM2.5"]
             },
 
             xAxis: {
@@ -176,7 +175,7 @@ export default {
                   color: "#808080"
                 }
               },
-              data: res.data.data.weekdays
+              data: res.data.data.days
             },
             yAxis: {
               type: "value",
@@ -189,46 +188,43 @@ export default {
             },
             series: [
               {
-                name: "停车数量",
-                type: "bar",
-                stack: "",
-                smooth: true,
-                barWidth: 10,
-                data: res.data.data.shuliang
-              },
-              {
-                name: "环比(月)",
+                name: "PM10",
                 type: "line",
                 stack: "",
-                smooth: true,
-                symbolSize: 0, //拐点图形大小
+                data: res.data.data.pm10
+              },
+              {
+                name: "PM2.5",
+                type: "line",
+                stack: "",
                 lineStyle: {
                   width: 2,
                   type: "dashed"
                 },
-                data: res.data.data.huanbi
+                data: res.data.data.pm25
               }
             ]
           });
         });
     },
-    initData3() {
+    initMonitorData3() {
       // 基于准备好的dom，初始化echarts实例
-      var myChart = echarts.init(document.getElementById("main3"));
+      var mainMonitor3 = echarts.init(document.getElementById("mainMonitor3"));
       this.$http
-        .get("http://119.3.248.197:8086/api/mobile/TingCheChangShiYongLv", {
+        .get("http://119.3.248.197:8086/api/mobile/HuanJiangJianCeChat", {
           params: {
             type: 2
           }
         })
         .then(res => {
+          console.log(res);
           // 绘制图表
-          myChart.setOption({
+          mainMonitor3.setOption({
             color: ["#58e7ff", "#febb05"],
             title: {
-              text: "停车场使用率（%）",
+              text: "μg/m3",
               textStyle: {
-                fontSize: 14,
+                fontSize: 16,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -243,7 +239,7 @@ export default {
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
-              data: ["停车数量", "环比(年)"]
+              data: ["PM10", "PM2.5"]
             },
 
             xAxis: {
@@ -255,7 +251,7 @@ export default {
                   color: "#808080"
                 }
               },
-              data: res.data.data.weekdays
+              data: res.data.data.days
             },
             yAxis: {
               type: "value",
@@ -268,24 +264,20 @@ export default {
             },
             series: [
               {
-                name: "停车数量",
-                type: "bar",
-                stack: "",
-                smooth: true,
-                barWidth: 10,
-                data: res.data.data.shuliang
-              },
-              {
-                name: "环比(年)",
+                name: "PM10",
                 type: "line",
                 stack: "",
-                smooth: true,
-                symbolSize: 0, //拐点图形大小
+                data: res.data.data.pm10
+              },
+              {
+                name: "PM2.5",
+                type: "line",
+                stack: "",
                 lineStyle: {
                   width: 2,
                   type: "dashed"
                 },
-                data: res.data.data.huanbi
+                data: res.data.data.pm25
               }
             ]
           });
@@ -304,9 +296,11 @@ export default {
   overflow: hidden;
   margin: 10px 0;
   .top {
-    font-size: 14px;
+    font-size: 16px;
     text-align: right;
     margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
     .close {
       cursor: pointer;
     }
