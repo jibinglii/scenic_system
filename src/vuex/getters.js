@@ -1,3 +1,4 @@
+export const fId = state => state.fId
 export const isPack = state => state.isPack
 export const isPackShow1 = state => state.isPackShow1
 export const isPackShow2 = state => state.isPackShow2

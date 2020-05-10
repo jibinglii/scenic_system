@@ -1,4 +1,5 @@
 export default {
+  fId: 0,
   isPack: false,
   isPackShow1: true,
   isPackShow2: true,

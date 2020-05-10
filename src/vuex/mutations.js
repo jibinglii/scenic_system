@@ -1,4 +1,7 @@
 // 更改用户状态
+export const changefId = (state, status) => {
+  state.fId = status
+}
 export const changeIsPack = (state, status) => {
   state.isPack = status
 }

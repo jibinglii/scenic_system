@@ -8,8 +8,8 @@ import router from './router'
 
 Vue.config.productionTip = false
 
-import VueiClient from '@supermap/vue-iclient-leaflet';
-Vue.use(VueiClient);
+// import VueiClient from '@supermap/vue-iclient-leaflet';
+// Vue.use(VueiClient);
 
 import './assets/css/common.scss'
 

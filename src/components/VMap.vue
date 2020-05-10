@@ -1,43 +1,64 @@
 <template>
-  <div id="main">
-    <sm-web-map :map-options="mapOptions">
-      <sm-tile-layer :url="url"></sm-tile-layer>
-
-    </sm-web-map>
-  </div>
+  <div id="map"></div>
 </template>
 <script>
+import "leaflet/dist/leaflet.css";
+import "@supermap/iclient-leaflet";
+// import { tiledMapLayer } from "@supermap/iclient-leaflet";
+import "leaflet/dist/leaflet";
+import L from "leaflet";
 export default {
   name: "vmap",
-  props: ["lng", "lat"],
-  data () {
+  data() {
     return {
-      url: "",
-      mapOptions: {
-        center: [39.94, 116.31],
-        zoom: 18,
-        crs: L.CRS.EPSG4326
-      },
-
+      scenicLists: []
     };
   },
-  mounted () {
-    this.gissetting2d()
+  created() {
+    this.gissetting2d();
   },
   methods: {
-    async gissetting2d () {
-      await this.$http.get('/gissetting/2d').then(res => {
-        let result = res.data.data
-        this.url = result.F_URL
-        console.log(res)
-        localStorage.setItem('Fid', res.data.data.F_Id)
-      })
+    async gissetting2d() {
+      await this.$http.get("/gissetting/2d").then(res => {
+        let result = res.data.data;
+        // console.log(result);
+        var fId = result.F_Id;
+        console.log(fId)
+        this.$store.dispatch("setfId", fId);
+        var map = L.map("map", {
+          crs: L.CRS.EPSG4326,
+          center: [39.94, 116.31],
+          maxZoom: 24,
+          zoom: 18,
+          minZoom: 0,
+          attributionControl: true
+        });
+        L.supermap.tiledMapLayer(result.F_URL).addTo(map);
+        this.getLists(map);
+      });
     },
+    async getLists(map) {
+      var fId = this.$store.state.fId;
+      await this.$http.get("/gisscenicarea/getlist/" + fId).then(res => {
+        this.scenicLists = res.data.data;
+        console.log(this.scenicLists);
+        for (var i = 0; i < this.scenicLists.length; i++) {
+          var latlng = L.latLng(this.scenicLists[i].F_YPoint * 1, this.scenicLists[i].F_XPoint * 1)
+          var marker = L.marker(latlng, {
+            title: this.scenicLists[i].F_Name,
+            icon: L.icon({
+              iconUrl: require("../assets/images/scenic_icon.png"),
+              iconSize: [34, 42],
+            }),
+          }).addTo(map).bindPopup(this.scenicLists[i].F_Name)
+        }
+      });
+    }
   }
 };
 </script>
-<style scoped>
-#main {
+<style lang="scss" scoped>
+#map {
   margin: 0;
   overflow: hidden;
   background: #fff;

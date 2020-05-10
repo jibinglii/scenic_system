@@ -1,4 +1,9 @@
 // 应用mutation
+export const setfId = ({
+  commit
+}) => {
+  commit('changefId', true);
+}
 export const isPackAction = ({
   commit
 }) => {
