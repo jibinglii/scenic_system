@@ -1,10 +1,8 @@
 <template>
   <div class="index_div">
-    <v-map></v-map>
-    <!-- <iframe src="../static/gettingStarted/f.html"
-            width="100%"
-    height="100%"></iframe>-->
-    <div class="title_Div" :style="{'background-image':'url('+title_bg+')'}">
+    <v-map ref="childFun"></v-map>
+    <div class="title_Div"
+         :style="{'background-image':'url('+title_bg+')'}">
       <h2>景区一张图数据管理系统</h2>
       <span>
         在园人数：
@@ -22,10 +20,10 @@
     <div class="list_div">
       <v-search></v-search>
       <v-weather></v-weather>
-      <v-sights></v-sights>
+      <v-sights @popupBtn="popupBtn"></v-sights>
       <v-address></v-address>
       <v-monitor></v-monitor>
-      <!-- <v-navigation></v-navigation> -->
+      <v-navigation></v-navigation>
       <v-statistics></v-statistics>
     </div>
     <div class="echarts_right">
@@ -43,14 +41,14 @@ import Weather from "../components/Weather";
 import Sights from "../components/Sights";
 import Address from "../components/Address";
 import Monitor from "../components/Monitor";
-// import Navigation from "../components/Navigation";
+import Navigation from "../components/Navigation";
 import Statistics from "../components/Statistics";
 import packData from "../components/packData";
 import TicketData from "../components/TicketData";
 import MonitorData from "../components/MonitorData";
 export default {
   name: "index",
-  data() {
+  data () {
     return {
       title_bg: require("../assets/images/title_bg.png"),
       visible: false,
@@ -78,11 +76,14 @@ export default {
       }
     };
   },
-  created() {
+  created () {
     this.ticketDatas();
   },
   methods: {
-    async ticketDatas() {
+    popupBtn () {
+      this.$refs.childFun.getLists();
+    },
+    async ticketDatas () {
       await this.$http
         .get("http://119.3.248.197:8086/api/mobile/PiaoWuShuJu")
         .then(res => {
@@ -101,7 +102,7 @@ export default {
     "v-sights": Sights,
     "v-address": Address,
     "v-monitor": Monitor,
-    // "v-navigation": Navigation,
+    "v-navigation": Navigation,
     "v-statistics": Statistics,
     "v-pack-data": packData,
     "v-ticket-data": TicketData,

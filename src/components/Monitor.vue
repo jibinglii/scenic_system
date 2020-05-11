@@ -10,7 +10,7 @@
         <p @click="visible = false">关闭</p>
         <div class="listDiv">
           <div class="list"
-               v-for="(item,index) in scenicList"
+               v-for="(item,index) in $store.state.scenicLists"
                :key="index">
             <div class="left">
               <img :src="item.F_Image" />
@@ -49,20 +49,19 @@ export default {
       isshow: false,
       img: require("../assets/images/jk.png"),
       activeImg: require("../assets/images/active_jk.png"),
-      scenicList: []
     };
   },
   created () {
-    this.getLIsts()
+    // this.getLIsts()
   },
   methods: {
-    async getLIsts () {
-      var fId = localStorage.getItem('Fid')
-      await this.$http.get('/gisscenicarea/getlist/' + fId).then(res => {
-        console.log(res)
-        this.scenicList = res.data.data
-      })
-    },
+    // async getLIsts () {
+    //   var fId = localStorage.getItem('Fid')
+    //   await this.$http.get('/gisscenicarea/getlist/' + fId).then(res => {
+    //     console.log(res)
+    //     this.scenicList = res.data.data
+    //   })
+    // },
   },
   components: {
     "el-popover": Popover,

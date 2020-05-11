@@ -1,6 +1,12 @@
 // 更改用户状态
-export const changefId = (state, status) => {
-  state.fId = status
+export const changefId = (state, data) => {
+  state.fId = data
+}
+export const changeScenicLists = (state, data) => {
+  state.scenicLists = data
+}
+export const changemap = (state, data) => {
+  state.map = data
 }
 export const changeIsPack = (state, status) => {
   state.isPack = status
@@ -36,4 +42,3 @@ export const changeIsMonitorShow2 = (state, status) => {
 export const changeIsMonitorShow3 = (state, status) => {
   state.isMonitorShow3 = status
 }
-

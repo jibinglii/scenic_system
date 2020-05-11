@@ -7,13 +7,15 @@ import App from './App'
 import router from './router'
 
 Vue.config.productionTip = false
-
+import Toast from 'vant/lib/toast'
+import 'vant/lib/toast/style'
 // import VueiClient from '@supermap/vue-iclient-leaflet';
 // Vue.use(VueiClient);
 
 import './assets/css/common.scss'
 
 Vue.prototype.$http = http
+Vue.prototype.$toast = Toast
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

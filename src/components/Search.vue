@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover trigger="hover"
+      <el-popover trigger="click"
                   placement="right-start"
                   width="460"
                   v-model="visible">
@@ -9,8 +9,9 @@
         <div style="text-align:center">
           <el-input placeholder="搜索"
                     prefix-icon="el-icon-search"
+                    clearable
                     v-model="searchText"
-                    @change="onChange"></el-input>
+                    @blur="onblur"></el-input>
         </div>
         <div class="listDiv">
           <div class="list"
@@ -29,7 +30,8 @@
               </div>
             </div>
           </div>
-          <div v-show="isShow">未搜索到指定内容</div>
+          <div v-show="isShow"
+               style="text-align:center">未搜索到指定内容</div>
         </div>
 
         <el-button slot="reference"
@@ -61,7 +63,7 @@ export default {
     };
   },
   methods: {
-    onChange () {
+    onblur () {
       this.getListSearch()
     },
     async getListSearch () {

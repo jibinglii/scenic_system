@@ -1,17 +1,17 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover
-        trigger="hover"
-        placement="right"
-        width="460"
-        v-model="visible"
-        title="游客导览"
-        popper-class="jian_navigation"
-      >
+      <el-popover trigger="hover"
+                  placement="right"
+                  width="460"
+                  v-model="visible"
+                  title="游客导览"
+                  popper-class="jian_navigation">
         <p @click="visible = false">关闭</p>
         <div class="listDiv">
-          <div class="list" v-for="(item,index) in lists" :key="index">
+          <div class="list"
+               v-for="(item,index) in lists"
+               :key="index">
             <div class="top">
               <h2>{{item.route}}</h2>
               <div class="button_div">
@@ -23,9 +23,14 @@
             </div>
           </div>
         </div>
-        <el-button slot="reference" class="img_div">
-          <img :src="activeImg" class="activeImg" alt />
-          <img :src="img" class="img" alt />
+        <el-button slot="reference"
+                   class="img_div">
+          <img :src="activeImg"
+               class="activeImg"
+               alt />
+          <img :src="img"
+               class="img"
+               alt />
         </el-button>
       </el-popover>
     </div>
@@ -36,7 +41,7 @@
 import { Popover, Button } from "element-ui";
 export default {
   name: "search",
-  data() {
+  data () {
     return {
       visible: false,
       isshow: false,
@@ -46,22 +51,22 @@ export default {
         {
           route: "1小时推荐路线",
           des:
-            "紫竹院公园南门—双林寺塔遗址—绿毯诗韵—青莲岛—梅桥—荷花渡—茗缘阁—紫竹院公园南门"
+            "紫竹院公园南门—荷花渡—青莲岛—澄碧山房—紫竹院公园南门"
         },
         {
           route: "2小时推荐路线",
           des:
-            "紫竹院公园西南门—四君亭—梅桥—八宜茶舍—夕梯—跨海东征—福萌紫竹院—镜游亭—一得桥—紫竹院公园西南门"
+            "紫竹院公园南门—荷花渡—青莲岛—澄碧山房—三友亭—四君亭—紫竹院公园南门"
         },
         {
           route: "2.5小时推荐路线",
           des:
-            "紫竹院公园南门—双林寺塔遗址—绿毯诗韵—青莲岛—梅桥—荷花渡—茗缘阁—紫竹院公园南门"
+            "紫竹院公园南门—荷花渡—青莲岛—明月岛—夕楼、夕梯—聆涛亭—友贤山馆—斑竹麓—紫竹院公园北门"
         },
         {
           route: "3.5小时推荐路线",
           des:
-            "紫竹院公园南门—双林寺塔遗址—绿毯诗韵—青莲岛—梅桥—荷花渡—茗缘阁—紫竹院公园南门"
+            "紫竹院公园南门—澄碧山房—三友亭—四君亭—紫竹垂钓区—跨海东征—明月岛—夕楼、夕梯—澄鲜湖—青莲岛—荷花渡—聆涛亭—友贤山馆—斑竹麓"
         }
       ]
     };

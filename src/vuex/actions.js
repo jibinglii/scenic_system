@@ -1,9 +1,20 @@
 // 应用mutation
 export const setfId = ({
   commit
-}) => {
-  commit('changefId', true);
+}, data) => {
+  commit('changefId', data)
 }
+export const setScenicLists = ({
+  commit
+}, data) => {
+  commit('changeScenicLists', data)
+}
+export const setmap = ({
+  commit
+}, data) => {
+  commit('changemap', data)
+}
+
 export const isPackAction = ({
   commit
 }) => {
@@ -51,7 +62,7 @@ export const isMonitorShow1 = ({
 }) => {
   commit('changeIsMonitorShow1', true);
 }
-export const  isMonitorShow2= ({
+export const isMonitorShow2 = ({
   commit
 }) => {
   commit('changeIsMonitorShow2', true);

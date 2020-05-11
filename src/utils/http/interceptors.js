@@ -1,5 +1,5 @@
-// import Toast from 'vant/lib/toast'
-// import 'vant/lib/toast/style'
+import Toast from 'vant/lib/toast'
+import 'vant/lib/toast/style'
 
 export default http => {
   // 请求拦截
