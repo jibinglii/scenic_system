@@ -19,7 +19,7 @@
               <h3>{{item.F_Name}}</h3>
               <p>{{item.F_Remarks}}</p>
               <div class="button_div">
-                <el-button>查看</el-button>
+                <el-button @click.native="monitorBtn(item.F_Id)">查看</el-button>
               </div>
             </div>
           </div>
@@ -49,19 +49,40 @@ export default {
       isshow: false,
       img: require("../assets/images/jk.png"),
       activeImg: require("../assets/images/active_jk.png"),
+
+      markermonitorList: [],
+      markermonitorgroup: null,
+      map: null,
+      videoList: [],
+      f_video: ''
     };
   },
   created () {
-    // this.getLIsts()
+
   },
   methods: {
-    // async getLIsts () {
-    //   var fId = localStorage.getItem('Fid')
-    //   await this.$http.get('/gisscenicarea/getlist/' + fId).then(res => {
-    //     console.log(res)
-    //     this.scenicList = res.data.data
-    //   })
-    // },
+    monitorBtn (F_Id) {
+
+      this.map = this.$store.state.map
+      var scenicLists = this.$store.state.scenicLists
+      for (var i = 0; i < scenicLists.length; i++) {
+        if (F_Id === scenicLists[i].F_Id) {
+          this.map.panTo([scenicLists[i].F_YPoint, scenicLists[i].F_XPoint]);
+          this.videoLists(F_Id)
+        }
+      }
+    },
+    async videoLists (F_Id) {
+      await this.$http.get('gisscenicarea/getvideolist/' + F_Id).then(res => {
+        this.videoList = res.data.data
+        console.log(res)
+        for (var i = 0; i < this.videoList.length; i++) {
+          this.f_video = this.videoList[i].F_Video
+          this.$store.dispatch('setfVideo', this.f_video)
+        }
+
+      })
+    }
   },
   components: {
     "el-popover": Popover,

@@ -8,6 +8,27 @@ export const changeScenicLists = (state, data) => {
 export const changemap = (state, data) => {
   state.map = data
 }
+export const changemarkerscenicgroup = (state, data) => {
+  state.markerscenicgroup = data
+}
+export const changemarkercsgroup = (state, data) => {
+  state.markercsgroup = data
+}
+export const changemarkerzxgroup = (state, data) => {
+  state.markerzxgroup = data
+}
+export const changemarkerwifigroup = (state, data) => {
+  state.markerwifigroup = data
+}
+export const changemarkerfdgroup = (state, data) => {
+  state.markerfdgroup = data
+}
+export const changemarkermonitorgroup = (state, data) => {
+  state.markermonitorgroup = data
+}
+export const changefVideo = (state, data) => {
+  state.fVideo = data
+}
 export const changeIsPack = (state, status) => {
   state.isPack = status
 }

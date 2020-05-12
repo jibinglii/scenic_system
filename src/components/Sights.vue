@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover trigger="click"
+      <el-popover trigger="hover"
                   placement="right"
                   width="460"
                   v-model="visible"
@@ -19,7 +19,7 @@
               <h3>{{item.F_Name}}</h3>
               <p>{{item.F_Remarks}}</p>
               <div class="button_div">
-                <el-button @click="popupBtn()">查看地图</el-button>
+                <el-button @click="popupBtn(item.F_Id)">查看地图</el-button>
               </div>
             </div>
           </div>
@@ -50,16 +50,23 @@ export default {
       img: require("../assets/images/jd.png"),
       activeImg: require("../assets/images/active_jd.png"),
       scenic: [],
+      map: null
     };
   },
   mounted () {
 
   },
   methods: {
-    popupBtn () {
-      this.$emit('popupBtn');
-
-      // this.$refs.childFun.getLists(this.$store.state.map)
+    popupBtn (id) {
+      this.map = this.$store.state.map
+      console.log(this.map)
+      console.log(id)
+      var scenicLists = this.$store.state.scenicLists
+      for (var i = 0; i < scenicLists.length; i++) {
+        if (id === scenicLists[i].F_Id) {
+          this.map.panTo([scenicLists[i].F_YPoint, scenicLists[i].F_XPoint]);
+        }
+      }
     }
   },
   components: {

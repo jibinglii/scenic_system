@@ -1,6 +1,6 @@
 <template>
   <div class="index_div">
-    <v-map ref="childFun"></v-map>
+    <v-map ref="mychild"></v-map>
     <div class="title_Div"
          :style="{'background-image':'url('+title_bg+')'}">
       <h2>景区一张图数据管理系统</h2>
@@ -20,9 +20,9 @@
     <div class="list_div">
       <v-search></v-search>
       <v-weather></v-weather>
-      <v-sights @popupBtn="popupBtn"></v-sights>
+      <v-sights @mouseenter.native="mouseSight"></v-sights>
       <v-address></v-address>
-      <v-monitor></v-monitor>
+      <v-monitor @mouseenter.native="mouseMonitor"></v-monitor>
       <v-navigation></v-navigation>
       <v-statistics></v-statistics>
     </div>
@@ -73,15 +73,58 @@ export default {
         ZaiYuanCount: "",
         RuYuanCount: "",
         ShiShiShouPiao: ""
-      }
+      },
+      map: null
     };
   },
   created () {
-    this.ticketDatas();
+    // this.$nextTick(() => {
+    this.ticketDatas()
+    // this.mouseSight()
+    // this.mouseMonitor()
+    // })
+
   },
   methods: {
-    popupBtn () {
-      this.$refs.childFun.getLists();
+    mouseSight () {
+      this.map = this.$store.state.map
+      this.$refs.mychild.getLists(this.map)
+      // var markermonitorgroup = this.$store.state.markermonitorgroup
+      // if (markermonitorgroup != '') {
+      //   return markermonitorgroup.clearLayers()
+      // }
+
+
+      // var markercsgroup = this.$store.state.markercsgroup
+      // var markerzxgroup = this.$store.state.markerzxgroup
+      // var markerwifigroup = this.$store.state.markerwifigroup
+      // var markerfdgroup = this.$store.state.markerfdgroup
+      // markercsgroup.clearLayers();
+      // markerzxgroup.clearLayers();
+      // markerwifigroup.clearLayers();
+      // markerfdgroup.clearLayers();
+
+
+    },
+    mouseMonitor () {
+      // var markerscenicgroup = this.$store.state.markerscenicgroup
+      // if (markerscenicgroup != '') {
+      //   markerscenicgroup.clearLayers()
+      // }
+      this.map = this.$store.state.map
+      this.$refs.mychild.getmonitorLists(this.map)
+      // var markercsgroup = this.$store.state.markercsgroup
+      // var markerzxgroup = this.$store.state.markerzxgroup
+      // var markerwifigroup = this.$store.state.markerwifigroup
+      // var markerfdgroup = this.$store.state.markerfdgroup
+      // markercsgroup.clearLayers();
+      // markerzxgroup.clearLayers();
+      // markerwifigroup.clearLayers();
+      // markerfdgroup.clearLayers();
+
+
+
+
     },
     async ticketDatas () {
       await this.$http

@@ -14,7 +14,41 @@ export const setmap = ({
 }, data) => {
   commit('changemap', data)
 }
-
+export const setmarkerscenicgroup = ({
+  commit
+}, data) => {
+  commit('changemarkerscenicgroup', data)
+}
+export const setmarkercsgroup = ({
+  commit
+}, data) => {
+  commit('changemarkercsgroup', data)
+}
+export const setmarkerzxgroup = ({
+  commit
+}, data) => {
+  commit('changemarkerzxgroup', data)
+}
+export const setmarkerwifigroup = ({
+  commit
+}, data) => {
+  commit('changemarkerwifigroup', data)
+}
+export const setmarkerfdgroup = ({
+  commit
+}, data) => {
+  commit('changemarkerfdgroup', data)
+}
+export const setmarkermonitorgroup = ({
+  commit
+}, data) => {
+  commit('changemarkermonitorgroup', data)
+}
+export const setfVideo = ({
+  commit
+}, data) => {
+  commit('changefVideo', data)
+}
 export const isPackAction = ({
   commit
 }) => {

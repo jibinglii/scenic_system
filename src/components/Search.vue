@@ -11,7 +11,7 @@
                     prefix-icon="el-icon-search"
                     clearable
                     v-model="searchText"
-                    @blur="onblur"></el-input>
+                    @change="onChange"></el-input>
         </div>
         <div class="listDiv">
           <div class="list"
@@ -26,7 +26,7 @@
               <p>{{item.F_Remarks}}</p>
               <div class="button_div">
                 <el-button>查看地图</el-button>
-                <el-button>实时监控</el-button>
+                <!-- <el-button>实时监控</el-button> -->
               </div>
             </div>
           </div>
@@ -63,7 +63,7 @@ export default {
     };
   },
   methods: {
-    onblur () {
+    onChange () {
       this.getListSearch()
     },
     async getListSearch () {
