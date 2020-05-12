@@ -1,7 +1,7 @@
 export default {
   fId: 0,
   scenicLists: [],
-  map: {},
+  map: null,
   markercsgroup: null,
   markerzxgroup: null,
   markerwifigroup: null,

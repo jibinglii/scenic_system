@@ -71,10 +71,12 @@ export default {
         this.$store.dispatch('setmarkerscenicgroup', this.markerscenicgroup)
       });
     },
-    async getmonitorLists (map) {
+    // async getmonitorLists (map) {
+      getmonitorLists (map){
       var fId = this.$store.state.fId;
-      await this.$http.get("/gisscenicarea/getlist/" + fId).then(res => {
-        this.monitorLists = res.data.data;
+      //  this.$http.get("/gisscenicarea/getlist/" + fId).then(res => {
+        // this.monitorLists = res.data.data;
+        this.monitorLists = this.$store.state.scenicLists;
         for (var i = 0; i < this.monitorLists.length; i++) {
           console.log(this.$store.state.fVideo)
           var latlng = L.latLng(this.monitorLists[i].F_YPoint * 1, this.monitorLists[i].F_XPoint * 1)
@@ -90,7 +92,7 @@ export default {
         this.markermonitorgroup = L.layerGroup(this.markermonitorList);
         this.map.addLayer(this.markermonitorgroup);
         this.$store.dispatch('setmarkerscenicgroup', this.markermonitorgroup)
-      })
+      // })
     },
   },
   components: {

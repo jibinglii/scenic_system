@@ -1,8 +1,7 @@
 <template>
   <div class="index_div">
     <v-map ref="mychild"></v-map>
-    <div class="title_Div"
-         :style="{'background-image':'url('+title_bg+')'}">
+    <div class="title_Div" :style="{'background-image':'url('+title_bg+')'}">
       <h2>景区一张图数据管理系统</h2>
       <span>
         在园人数：
@@ -21,7 +20,7 @@
       <v-search></v-search>
       <v-weather></v-weather>
       <v-sights @mouseenter.native="mouseSight"></v-sights>
-      <v-address></v-address>
+      <v-address @mouseenter.native="mouseAddress"></v-address>
       <v-monitor @mouseenter.native="mouseMonitor"></v-monitor>
       <v-navigation></v-navigation>
       <v-statistics></v-statistics>
@@ -48,7 +47,7 @@ import TicketData from "../components/TicketData";
 import MonitorData from "../components/MonitorData";
 export default {
   name: "index",
-  data () {
+  data() {
     return {
       title_bg: require("../assets/images/title_bg.png"),
       visible: false,
@@ -77,56 +76,43 @@ export default {
       map: null
     };
   },
-  created () {
-    // this.$nextTick(() => {
-    this.ticketDatas()
-    // this.mouseSight()
-    // this.mouseMonitor()
-    // })
-
+  created() {
+    this.ticketDatas();
   },
   methods: {
-    mouseSight () {
-      this.map = this.$store.state.map
-      this.$refs.mychild.getLists(this.map)
-      // var markermonitorgroup = this.$store.state.markermonitorgroup
-      // if (markermonitorgroup != '') {
-      //   return markermonitorgroup.clearLayers()
-      // }
-
-
-      // var markercsgroup = this.$store.state.markercsgroup
-      // var markerzxgroup = this.$store.state.markerzxgroup
-      // var markerwifigroup = this.$store.state.markerwifigroup
-      // var markerfdgroup = this.$store.state.markerfdgroup
+    mouseSight() {
+      this.map = this.$store.state.map;
+      this.$refs.mychild.getLists(this.map);
+      // this.$refs.child.getListCs()
+      // this.$refs.child.getListZx()
+      // this.$refs.child.getListWIFI()
+      // this.$refs.child.getListFd()
+      // var markercsgroup = this.$store.state.markercsgroup;
+      // var markerzxgroup = this.$store.state.markerzxgroup;
+      // var markerwifigroup = this.$store.state.markerwifigroup;
+      // var markerfdgroup = this.$store.state.markerfdgroup;
       // markercsgroup.clearLayers();
       // markerzxgroup.clearLayers();
       // markerwifigroup.clearLayers();
       // markerfdgroup.clearLayers();
-
-
     },
-    mouseMonitor () {
-      // var markerscenicgroup = this.$store.state.markerscenicgroup
-      // if (markerscenicgroup != '') {
-      //   markerscenicgroup.clearLayers()
-      // }
-      this.map = this.$store.state.map
-      this.$refs.mychild.getmonitorLists(this.map)
-      // var markercsgroup = this.$store.state.markercsgroup
-      // var markerzxgroup = this.$store.state.markerzxgroup
-      // var markerwifigroup = this.$store.state.markerwifigroup
-      // var markerfdgroup = this.$store.state.markerfdgroup
+    mouseMonitor() {
+      this.map = this.$store.state.map;
+      this.$refs.mychild.getmonitorLists(this.map);
+      // var markercsgroup = this.$store.state.markercsgroup;
+      // var markerzxgroup = this.$store.state.markerzxgroup;
+      // var markerwifigroup = this.$store.state.markerwifigroup;
+      // var markerfdgroup = this.$store.state.markerfdgroup;
       // markercsgroup.clearLayers();
       // markerzxgroup.clearLayers();
       // markerwifigroup.clearLayers();
       // markerfdgroup.clearLayers();
-
-
-
-
     },
-    async ticketDatas () {
+    mouseAddress() {
+      var markerscenicgroup = this.$store.state.markerscenicgroup;
+      markerscenicgroup.clearLayers();
+    },
+    async ticketDatas() {
       await this.$http
         .get("http://119.3.248.197:8086/api/mobile/PiaoWuShuJu")
         .then(res => {
