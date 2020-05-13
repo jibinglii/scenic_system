@@ -1,22 +1,31 @@
 <template>
   <div>
-    <div class="bar" v-show="$store.state.isPackShow1">
+    <div class="bar"
+         v-show="$store.state.isPackShow1">
       <div class="top">
-        <span @click="close()" class="close">关闭</span>
+        <span @click="close()"
+              class="close">关闭</span>
       </div>
-      <div id="main1" style="width:100%;height: 200px"></div>
+      <div id="main1"
+           style="width:300px;height: 200px"></div>
     </div>
-    <div class="bar" v-show="$store.state.isPackShow2">
+    <div class="bar"
+         v-show="$store.state.isPackShow2">
       <div class="top">
-        <span @click="close2()" class="close">关闭</span>
+        <span @click="close2()"
+              class="close">关闭</span>
       </div>
-      <div id="main2" style="width:100%;height: 200px"></div>
+      <div id="main2"
+           style="width:300px;height: 200px"></div>
     </div>
-    <div class="bar" v-show="$store.state.isPackShow3">
+    <div class="bar"
+         v-show="$store.state.isPackShow3">
       <div class="top">
-        <span @click="close3()" class="close">关闭</span>
+        <span @click="close3()"
+              class="close">关闭</span>
       </div>
-      <div id="main3" style="width:100%;height: 200px"></div>
+      <div id="main3"
+           style="width:300px;height: 200px"></div>
     </div>
   </div>
 </template>
@@ -30,12 +39,12 @@ require("echarts/lib/component/tooltip");
 require("echarts/lib/component/title");
 export default {
   name: "bar",
-  data() {
+  data () {
     return {
-      
+
     };
   },
-  mounted() {
+  mounted () {
     this.$nextTick(() => {
       this.initData();
       this.initData2();
@@ -43,18 +52,18 @@ export default {
     });
   },
   methods: {
-    close() {
+    close () {
       this.$store.state.isPackShow1 = false;
     },
-    close2() {
+    close2 () {
       this.$store.state.isPackShow2 = false;
     },
-    close3() {
+    close3 () {
       this.$store.state.isPackShow3 = false;
     },
 
     //初始化数据
-    initData() {
+    initData () {
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById("main1"));
       this.$http
@@ -66,11 +75,11 @@ export default {
         .then(res => {
           // 绘制图表
           myChart.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "停车场使用率（%）",
               textStyle: {
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -81,7 +90,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
@@ -133,7 +142,7 @@ export default {
           });
         });
     },
-    initData2() {
+    initData2 () {
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById("main2"));
       this.$http
@@ -145,11 +154,11 @@ export default {
         .then(res => {
           // 绘制图表
           myChart.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "停车场使用率（%）",
               textStyle: {
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -160,7 +169,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
@@ -212,7 +221,7 @@ export default {
           });
         });
     },
-    initData3() {
+    initData3 () {
       // 基于准备好的dom，初始化echarts实例
       var myChart = echarts.init(document.getElementById("main3"));
       this.$http
@@ -224,11 +233,11 @@ export default {
         .then(res => {
           // 绘制图表
           myChart.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "停车场使用率（%）",
               textStyle: {
-                fontSize: 14,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -239,7 +248,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },

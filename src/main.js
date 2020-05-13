@@ -9,8 +9,6 @@ import router from './router'
 Vue.config.productionTip = false
 import Toast from 'vant/lib/toast'
 import 'vant/lib/toast/style'
-// import VueiClient from '@supermap/vue-iclient-leaflet';
-// Vue.use(VueiClient);
 
 import './assets/css/common.scss'
 

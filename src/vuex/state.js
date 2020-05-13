@@ -9,6 +9,7 @@ export default {
   markerscenicgroup: null,
   markermonitorgroup: null,
   fVideo: '',
+  F_Id: [],
   isPack: false,
   isPackShow1: true,
   isPackShow2: true,

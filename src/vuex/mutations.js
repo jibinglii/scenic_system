@@ -29,6 +29,9 @@ export const changemarkermonitorgroup = (state, data) => {
 export const changefVideo = (state, data) => {
   state.fVideo = data
 }
+export const changeF_Id = (state, data) => {
+  state.F_Id = data
+}
 export const changeIsPack = (state, status) => {
   state.isPack = status
 }

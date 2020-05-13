@@ -49,6 +49,11 @@ export const setfVideo = ({
 }, data) => {
   commit('changefVideo', data)
 }
+export const setF_Id = ({
+  commit
+}, data) => {
+  commit('changeF_Id', data)
+}
 export const isPackAction = ({
   commit
 }) => {

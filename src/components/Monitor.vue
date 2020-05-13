@@ -62,7 +62,6 @@ export default {
   },
   methods: {
     monitorBtn (F_Id) {
-
       this.map = this.$store.state.map
       var scenicLists = this.$store.state.scenicLists
       for (var i = 0; i < scenicLists.length; i++) {
@@ -75,12 +74,10 @@ export default {
     async videoLists (F_Id) {
       await this.$http.get('gisscenicarea/getvideolist/' + F_Id).then(res => {
         this.videoList = res.data.data
-        console.log(res)
-        for (var i = 0; i < this.videoList.length; i++) {
-          this.f_video = this.videoList[i].F_Video
-          this.$store.dispatch('setfVideo', this.f_video)
-        }
-
+        // for (var i = 0; i < this.videoList.length; i++) {
+        this.f_video = this.videoList[0].F_Video
+        this.$store.dispatch('setfVideo', this.f_video)
+        // }
       })
     }
   },

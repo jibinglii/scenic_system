@@ -25,7 +25,7 @@
               <h3>{{item.F_Name}}</h3>
               <p>{{item.F_Remarks}}</p>
               <div class="button_div">
-                <el-button>查看地图</el-button>
+                <el-button @click.native="viewMapClick(item.F_Id)">查看地图</el-button>
                 <!-- <el-button>实时监控</el-button> -->
               </div>
             </div>
@@ -59,7 +59,9 @@ export default {
       searchText: "",
       img: require("../assets/images/search.png"),
       activeImg: require("../assets/images/active_search.png"),
-      lists: []
+      lists: [],
+      map: null,
+      F_Id: []
     };
   },
   methods: {
@@ -72,12 +74,21 @@ export default {
       await this.$http.get("/scenicareaaround/getlistforsearch/" + keyword).then(res => {
         console.log(res)
         this.lists = res.data.data
+
         if (res.data.data.length === 0) {
           this.isShow = true
         } else {
           this.isShow = false
         }
       });
+    },
+    viewMapClick (F_Id) {
+      this.map = this.$store.state.map
+      for (var i = 0; i < this.lists.length; i++) {
+        if (F_Id === this.lists[i].F_Id) {
+          this.map.panTo([this.lists[i].F_XPoint, this.lists[i].F_YPoint]);
+        }
+      }
     }
   },
   components: {

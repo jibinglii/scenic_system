@@ -8,7 +8,7 @@
               class="close">关闭</span>
       </div>
       <div id="mainTicket1"
-           style="width:100%;height: 200px"></div>
+           style="width:300px;height: 200px"></div>
     </div>
     <div class="bar"
          v-show="$store.state.isTicketShow2">
@@ -18,7 +18,7 @@
               class="close">关闭</span>
       </div>
       <div id="mainTicket2"
-           style="width:100%;height: 200px"></div>
+           style="width:300px;height: 200px"></div>
     </div>
   </div>
 </template>
@@ -59,11 +59,11 @@ export default {
           console.log(res);
           // 绘制图表
           mainTicket1.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "票数（万张）",
               textStyle: {
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -74,7 +74,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },
@@ -135,11 +135,11 @@ export default {
           console.log(res);
           // 绘制图表
           mainTicket2.setOption({
-            color: ["#58e7ff", "#febb05"],
+            color: ["#1d64bd", "#e6a23c"],
             title: {
               text: "票数（万张）",
               textStyle: {
-                fontSize: 16,
+                fontSize: 13,
                 fontWeight: "500",
                 color: "#7a7b7b"
               }
@@ -150,7 +150,7 @@ export default {
             legend: {
               y: "top",
               x: "right",
-              itemGap: 10,
+              itemGap: 8,
               textStyle: {
                 color: "#9c9e9e" //---所有图例的字体颜色
               },

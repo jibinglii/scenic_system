@@ -7,6 +7,7 @@ export const markerwifigroup = state => state.markerwifigroup
 export const markerfdgroup = state => state.markerfdgroup
 export const markermonitorgroup = state => state.markermonitorgroup
 export const fVideo = state => state.fVideo
+export const F_Id = state => state.F_Id
 export const isPack = state => state.isPack
 export const isPackShow1 = state => state.isPackShow1
 export const isPackShow2 = state => state.isPackShow2
