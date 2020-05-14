@@ -115,6 +115,7 @@ export default {
               this.csList[i].F_YPoint * 1
             );
             var marker0 = L.marker(latlng, {
+              title: this.csList[i].F_Name,
               icon: L.icon({
                 iconUrl: require("../assets/images/cs.png"),
                 iconSize: [30, 38]
@@ -141,6 +142,7 @@ export default {
               this.zxList[i].F_YPoint * 1
             );
             var marker1 = L.marker(latlng, {
+              title: this.zxList[i].F_Name,
               icon: L.icon({
                 iconUrl: require("../assets/images/zx.png"),
                 iconSize: [30, 38]
@@ -167,6 +169,7 @@ export default {
               this.wifiList[i].F_YPoint * 1
             );
             var marker2 = L.marker(latlng, {
+              title: this.wifiList[i].F_Name,
               icon: L.icon({
                 iconUrl: require("../assets/images/wifi.png"),
                 iconSize: [30, 38]
@@ -193,6 +196,7 @@ export default {
               this.fdList[i].F_YPoint * 1
             );
             var marker3 = L.marker(latlng, {
+              title: this.fdList[i].F_Name,
               icon: L.icon({
                 iconUrl: require("../assets/images/fd.png"),
                 iconSize: [30, 38]

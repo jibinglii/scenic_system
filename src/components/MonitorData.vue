@@ -117,7 +117,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {
@@ -193,7 +208,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {
@@ -269,7 +299,22 @@ export default {
               },
               axisTick: {
                 show: false
-              }
+              },
+              scale: true,
+              axisLabel: {
+                margin: 8,
+                formatter: function (value, index) {
+                  if (value >= 10000 && value < 10000000) {
+                    value = value / 10000 + "万";
+                  } else if (value >= 10000000) {
+                    value = value / 10000000 + "千万";
+                  }
+                  return value;
+                }
+              },
+            },
+            grid: {
+              left: 35
             },
             series: [
               {
