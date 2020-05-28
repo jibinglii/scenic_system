@@ -74,7 +74,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           // 绘制图表
           mainMonitor1.setOption({
             color: ["#1d64bd", "#e6a23c"],
@@ -165,7 +164,6 @@ export default {
           }
         })
         .then(res => {
-          console.log(res);
           // 绘制图表
           mainMonitor2.setOption({
             color: ["#1d64bd", "#e6a23c"],

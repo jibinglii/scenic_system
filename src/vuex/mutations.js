@@ -5,6 +5,21 @@ export const changefId = (state, data) => {
 export const changeScenicLists = (state, data) => {
   state.scenicLists = data
 }
+export const changecsList = (state, data) => {
+  state.csList = data
+}
+export const changezxList = (state, data) => {
+  state.zxList = data
+}
+export const changewifiList = (state, data) => {
+  state.wifiList = data
+}
+export const changefdList = (state, data) => {
+  state.fdList = data
+}
+export const changevideoList = (state, data) => {
+  state.videoList = data
+}
 export const changemap = (state, data) => {
   state.map = data
 }
@@ -25,6 +40,9 @@ export const changemarkerfdgroup = (state, data) => {
 }
 export const changemarkermonitorgroup = (state, data) => {
   state.markermonitorgroup = data
+}
+export const changevideoId = (state, data) => {
+  state.videoId = data
 }
 export const changefVideo = (state, data) => {
   state.fVideo = data

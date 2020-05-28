@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover trigger="hover"
+      <el-popover trigger="click"
                   placement="right"
                   width="460"
                   v-model="visible"

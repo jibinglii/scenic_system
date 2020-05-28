@@ -1,11 +1,17 @@
 export const fId = state => state.fId
 export const map = state => state.map
+export const csList = state => state.csList
+export const zxList = state => state.zxList
+export const wifiList = state => state.wifiList
+export const fdList = state => state.fdList
+export const videoList = state => state.videoList
 export const markerscenicgroup = state => state.markerscenicgroup
 export const markercsgroup = state => state.markercsgroup
 export const markerzxgroup = state => state.markerzxgroup
 export const markerwifigroup = state => state.markerwifigroup
 export const markerfdgroup = state => state.markerfdgroup
 export const markermonitorgroup = state => state.markermonitorgroup
+export const videoId = state => state.videoId
 export const fVideo = state => state.fVideo
 export const F_Id = state => state.F_Id
 export const isPack = state => state.isPack

@@ -18,15 +18,16 @@
       </span>
     </div>
     <div class="list_div">
-      <v-search @mouseenter.native="mouseSearch"></v-search>
+      <v-search @click.native="mouseSearch"></v-search>
       <v-weather></v-weather>
-      <v-sights @mouseenter.native="mouseSight"></v-sights>
-      <v-address @mouseenter.native="mouseAddress"
+      <v-sights @click.native="mouseSight"></v-sights>
+      <v-address @click.native="mouseAddress"
                  @parentgetListCs="childgetListCs"
                  @parentgetListZx="childgetListZx"
                  @parentgetListWIFI="childgetListWIFI"
                  @parentgetListFd="childgetListFd"></v-address>
-      <v-monitor @mouseenter.native="mouseMonitor"></v-monitor>
+      <v-monitor @click.native="mouseMonitor"
+                 @parentgetmonitorLists="childgetmonitorLists"></v-monitor>
       <v-navigation></v-navigation>
       <v-statistics></v-statistics>
     </div>
@@ -97,6 +98,9 @@ export default {
     childgetListFd () {
       this.$refs.mychild.getListFd(this.map);
     },
+    childgetmonitorLists () {
+      this.$refs.mychild.getmonitorLists(this.map);
+    },
     mouseSearch () {
       this.map = this.$store.state.map;
       this.$refs.mychild.getListCs(this.map);
@@ -105,28 +109,34 @@ export default {
       this.$refs.mychild.getListFd(this.map);
     },
     mouseSight () {
+      if (this.$store.state.scenicLists != '') {
+        var markercsgroup = this.$store.state.markercsgroup;
+        var markerzxgroup = this.$store.state.markerzxgroup;
+        var markerwifigroup = this.$store.state.markerwifigroup;
+        var markerfdgroup = this.$store.state.markerfdgroup;
+        markercsgroup.clearLayers();
+        markerzxgroup.clearLayers();
+        markerwifigroup.clearLayers();
+        markerfdgroup.clearLayers();
+      }
       this.map = this.$store.state.map;
       this.$refs.mychild.getLists(this.map);
-      var markercsgroup = this.$store.state.markercsgroup;
-      var markerzxgroup = this.$store.state.markerzxgroup;
-      var markerwifigroup = this.$store.state.markerwifigroup;
-      var markerfdgroup = this.$store.state.markerfdgroup;
-      markercsgroup.clearLayers();
-      markerzxgroup.clearLayers();
-      markerwifigroup.clearLayers();
-      markerfdgroup.clearLayers();
+
     },
     mouseMonitor () {
       this.map = this.$store.state.map;
-      this.$refs.mychild.getmonitorLists(this.map);
-      var markercsgroup = this.$store.state.markercsgroup;
-      var markerzxgroup = this.$store.state.markerzxgroup;
-      var markerwifigroup = this.$store.state.markerwifigroup;
-      var markerfdgroup = this.$store.state.markerfdgroup;
-      markercsgroup.clearLayers();
-      markerzxgroup.clearLayers();
-      markerwifigroup.clearLayers();
-      markerfdgroup.clearLayers();
+      if (this.$store.state.csList != '' || this.$store.state.zxList != '' || this.$store.state.wifiList != '' || this.$store.state.fdList != '') {
+        var markercsgroup = this.$store.state.markercsgroup;
+        var markerzxgroup = this.$store.state.markerzxgroup;
+        var markerwifigroup = this.$store.state.markerwifigroup;
+        var markerfdgroup = this.$store.state.markerfdgroup;
+        markercsgroup.clearLayers();
+        markerzxgroup.clearLayers();
+        markerwifigroup.clearLayers();
+        markerfdgroup.clearLayers();
+      }
+      var markerscenicgroup = this.$store.state.markerscenicgroup;
+      markerscenicgroup.clearLayers();
     },
     mouseAddress () {
       var markerscenicgroup = this.$store.state.markerscenicgroup;

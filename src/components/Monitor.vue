@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="popover">
-      <el-popover trigger="hover"
+      <el-popover trigger="click"
                   placement="right"
                   width="460"
                   v-model="visible"
@@ -19,7 +19,7 @@
               <h3>{{item.F_Name}}</h3>
               <p>{{item.F_Remarks}}</p>
               <div class="button_div">
-                <el-button @click.native="monitorBtn(item.F_Id)">查看</el-button>
+                <el-button @click.native="monitorBtn(item)">查看</el-button>
               </div>
             </div>
           </div>
@@ -58,26 +58,16 @@ export default {
     };
   },
   created () {
-
   },
   methods: {
-    monitorBtn (F_Id) {
-      this.map = this.$store.state.map
-      var scenicLists = this.$store.state.scenicLists
-      for (var i = 0; i < scenicLists.length; i++) {
-        if (F_Id === scenicLists[i].F_Id) {
-          this.map.panTo([scenicLists[i].F_YPoint, scenicLists[i].F_XPoint]);
-          this.videoLists(F_Id)
-        }
-      }
+    monitorBtn (item) {
+      this.videoLists(item.F_Id)
     },
     async videoLists (F_Id) {
       await this.$http.get('gisscenicarea/getvideolist/' + F_Id).then(res => {
         this.videoList = res.data.data
-        // for (var i = 0; i < this.videoList.length; i++) {
-        this.f_video = this.videoList[0].F_Video
-        this.$store.dispatch('setfVideo', this.f_video)
-        // }
+        this.$store.dispatch('setvideoList', this.videoList)
+        this.$emit('parentgetmonitorLists')
       })
     }
   },

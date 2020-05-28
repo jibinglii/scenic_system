@@ -9,6 +9,31 @@ export const setScenicLists = ({
 }, data) => {
   commit('changeScenicLists', data)
 }
+export const setcsList = ({
+  commit
+}, data) => {
+  commit('changecsList', data)
+}
+export const setzxList = ({
+  commit
+}, data) => {
+  commit('changezxList', data)
+}
+export const setwifiList = ({
+  commit
+}, data) => {
+  commit('changewifiList', data)
+}
+export const setfdList = ({
+  commit
+}, data) => {
+  commit('changefdList', data)
+}
+export const setvideoList = ({
+  commit
+}, data) => {
+  commit('changevideoList', data)
+}
 export const setmap = ({
   commit
 }, data) => {
@@ -43,6 +68,11 @@ export const setmarkermonitorgroup = ({
   commit
 }, data) => {
   commit('changemarkermonitorgroup', data)
+}
+export const setvideoId = ({
+  commit
+}, data) => {
+  commit('changevideoId', data)
 }
 export const setfVideo = ({
   commit

@@ -16,7 +16,7 @@ export default {
       markerscenicgroup: null,
       url: '',
       map: null,
-      monitorLists: [],
+      videoList: [],
       markermonitorList: [],
       markermonitorgroup: null,
       csList: [],
@@ -32,6 +32,7 @@ export default {
       markerzxgroup: null,
       markerwifigroup: null,
       markerfdgroup: null,
+
     };
   },
   created () {
@@ -43,13 +44,17 @@ export default {
         let result = res.data.data;
         this.url = result.F_URL
         var fId = result.F_Id;
+        var center = [0, 0];
+        if (result.F_Center && result.F_Center.indexOf(',') > -1) {
+          center = result.F_Center.split(',');
+        }
         this.$store.dispatch("setfId", fId);
         var map = L.map("map", {
           crs: L.CRS.EPSG4326,
-          center: [39.94, 116.31],
-          maxZoom: 24,
-          zoom: 18,
-          minZoom: 0,
+          center: [center[1], center[0]],
+          maxZoom: result.F_MaxZoom,
+          zoom: result.F_Zoom,
+          minZoom: result.F_MinZoom,
           attributionControl: true
         });
         L.supermap.tiledMapLayer(result.F_URL).addTo(map);
@@ -85,21 +90,22 @@ export default {
       });
     },
     getmonitorLists (map) {
-      var fId = this.$store.state.fId;
-      this.monitorLists = this.$store.state.scenicLists;
-      for (var i = 0; i < this.monitorLists.length; i++) {
-        // console.log(this.$store.state.fVideo)
-        var latlng = L.latLng(this.monitorLists[i].F_YPoint * 1, this.monitorLists[i].F_XPoint * 1)
+      this.videoList = this.$store.state.videoList;
+      if (this.markermonitorgroup != null) {
+        this.markermonitorgroup.clearLayers()
+      }
+      for (var i = 0; i < this.videoList.length; i++) {
+        var latlng = L.latLng(this.videoList[i].F_YPoint * 1, this.videoList[i].F_XPoint * 1)
         var marker1 = L.marker(latlng, {
-          title: this.monitorLists[i].F_Name,
+          title: this.videoList[i].F_Name,
           icon: L.icon({
             iconUrl: require("../assets/images/jk_icon.png"),
             iconSize: [34, 42],
           }),
-        }).addTo(map).bindPopup("<video width=358 height=200 controls><source src=" + this.$store.state.fVideo + " ></video/><h1>" + this.monitorLists[i].F_Name + "</h1><p>" + this.monitorLists[i].F_Remarks + "</p>")
+        }).addTo(map).bindPopup("<video width=358 height=200 controls><source src=" + this.videoList[i].F_Video + " ></video/><h1>" + this.videoList[i].F_Name + "</h1><p>" + this.videoList[i].F_Remarks + "</p>")
         this.markermonitorList.push(marker1)
       }
-      this.markermonitorgroup = L.layerGroup(this.markermonitorList);
+      this.markermonitorgroup = L.layerGroup(this.markermonitorList.splice(0, this.markermonitorList.length));
       this.map.addLayer(this.markermonitorgroup);
       this.$store.dispatch('setmarkerscenicgroup', this.markermonitorgroup)
     },
@@ -109,6 +115,7 @@ export default {
         .get("/scenicareaaround/getlist/" + keyword)
         .then(res => {
           this.csList = res.data.data;
+          this.$store.dispatch("setcsList", this.csList);
           for (var i = 0; i < this.csList.length; i++) {
             var latlng = L.latLng(
               this.csList[i].F_XPoint * 1,
@@ -136,6 +143,7 @@ export default {
         .get("/scenicareaaround/getlist/" + keyword)
         .then(res => {
           this.zxList = res.data.data;
+          this.$store.dispatch("setzxList", this.zxList);
           for (var i = 0; i < this.zxList.length; i++) {
             var latlng = L.latLng(
               this.zxList[i].F_XPoint * 1,
@@ -163,6 +171,7 @@ export default {
         .get("/scenicareaaround/getlist/" + keyword)
         .then(res => {
           this.wifiList = res.data.data;
+          this.$store.dispatch("setwifiList", this.wifiList);
           for (var i = 0; i < this.wifiList.length; i++) {
             var latlng = L.latLng(
               this.wifiList[i].F_XPoint * 1,
@@ -190,6 +199,7 @@ export default {
         .get("/scenicareaaround/getlist/" + keyword)
         .then(res => {
           this.fdList = res.data.data;
+          this.$store.dispatch("setfdList", this.fdList);
           for (var i = 0; i < this.fdList.length; i++) {
             var latlng = L.latLng(
               this.fdList[i].F_XPoint * 1,

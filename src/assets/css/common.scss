@@ -18,11 +18,11 @@
 
 .leaflet-popup-content-wrapper {
   width: 400px;
-  height: 325px;
+  height: auto;
 
   .leaflet-popup-content {
     width: 364px !important;
-    height: 325px;
+    height: auto;
 
     img {
       width: 360px;
@@ -43,6 +43,13 @@
       -webkit-box-orient: vertical;
       margin: 0;
       font-size: 14px;
+    }
+
+    p:hover {
+      -webkit-line-clamp: inherit; //限制文本的行数，只显示两行
+      -webkit-box-orient: inherit;
+      overflow: auto;
+      margin-bottom: 5px;
     }
   }
 }
@@ -206,6 +213,8 @@
         text-align: justify;
         padding-right: 10px;
       }
+
+
 
       .button_div {
         .el-button {
